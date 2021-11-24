@@ -2,8 +2,6 @@ numpy
 pandas
 joblib
 scikit-learn
-keras
-tensorflow-cpu
 Click==7.0
 Flask==1.1.1
 gunicorn==19.9.0
