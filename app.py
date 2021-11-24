@@ -13,7 +13,7 @@ class api:
     
     def l_r(self,arr):
 
-        LR_ = joblib.load('./services/lr_digit_rec.pkl')
+        L_R = joblib.load('./services/lr_digit_rec.pkl')
         pred = L_R.predict([arr])
         return pred
 
