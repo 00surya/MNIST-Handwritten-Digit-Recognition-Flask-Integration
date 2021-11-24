@@ -35,11 +35,11 @@ def digit():
 
 #         cnn_pred = str(api.CNN(arr))
         # knn_pred = api.KNN(arr)
-        lr_pred = str(api.l_r(arr))
+        lr_pred = api().l_r(arr)
 #         mnb_pred = str(api.mnb(arr))
-        # return str(pred)
+        # print(str(lr_pred))
 #         return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred,cnn_res=cnn_pred)
-        return jsonify(l_r_res=lr_pred)
+        return jsonify(l_r_res=str(lr_pred[0]))
         # return(str(cnn_pred))
     return render_template("index.html")
 
