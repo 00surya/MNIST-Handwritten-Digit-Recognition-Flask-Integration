@@ -422,7 +422,7 @@
         // debugger;
         // console.log(data);  
         
-        fetch('http://127.0.0.1:5000/digit', {
+        fetch('/digit', {
             method: 'POST',
             body: data,
             headers: {
@@ -442,7 +442,7 @@
                 result_box =  document.querySelector('#result')
                 
                 let res_map_obj = {
-//                     'cnn_res':'CNN',
+                    'cnn_res':'CNN',
                     'l_r_res':'Logestic Regression',
                     'mnb_res':'Multi_N Naive Bayes'}
 
@@ -453,7 +453,7 @@
                     console.log(clear_btn[0]);
                     
                     clr_btn_dom = `<button type="button" class="btn clr btn-primary mx-auto" id="sketchClearButton" onclick="window.location.reload()">clear</button>`
-
+                    
                     check = verify(pred_value[key])
                     console.log(check);
                     
@@ -608,8 +608,9 @@
 
     function verify(pred_val){
         let given_num = document.querySelector('.number').innerHTML
-        
-        if (pred_val == parseInt(given_num)){
+        console.log(typeof pred_val, pred_val)
+        console.log(typeof given_num, given_num)
+        if (parseInt(pred_val) == parseInt(given_num)){
             return true
             // document.getElementById('result').style.backgroundColor = "green"
             
