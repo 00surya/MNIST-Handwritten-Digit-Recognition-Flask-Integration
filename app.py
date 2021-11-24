@@ -16,12 +16,13 @@ def digit():
         arr = request.json['array']
         arr = np.array(arr)
 
-        cnn_pred = str(api.CNN(arr))
+#         cnn_pred = str(api.CNN(arr))
         # knn_pred = api.KNN(arr)
         lr_pred = str(api.lr(arr))
         mnb_pred = str(api.mnb(arr))
         # return str(pred)
-        return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred,cnn_res=cnn_pred)
+#         return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred,cnn_res=cnn_pred)
+        return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred)
         # return(str(cnn_pred))
     return render_template("index.html")
 
