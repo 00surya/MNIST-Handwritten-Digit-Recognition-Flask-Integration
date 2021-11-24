@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="col clr_btn">
+                <div class="col clr_btn" id='clear_btn'>
                     
 
                 </div>
@@ -152,8 +152,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
-    let touchend;
+let touchend;
+gen_randomNumber()
     window.addEventListener('load', () => {
+        document.body.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, false);
         // get the canvas element and its context
         const canvas = document.getElementById('sketchpad');
 
@@ -168,14 +172,14 @@
         let isRecognized = false;
         const zoom = 10;
 
-        const clearer = function clearer() {
+        function clearer() {
             context.clearRect(0, 0, footprint.width * zoom, footprint.height * zoom);
             // document.getElementById('result').innerText = '';
             isRecognized = false;
         };
 
         clearer();
-
+        
         function getOffsetSum(elem) {
             let top = 0;
             let left = 0;
@@ -184,10 +188,10 @@
                 left = left + parseInt(elem.offsetLeft)
                 elem = elem.offsetParent
             }
-
+            
             return { top, left }
         }
-
+        
         // create a drawer which tracks touch movements
         const drawer = {
             isDrawing: false,
@@ -203,7 +207,7 @@
                     try {
                         clearTimeout(touchend)
                     } catch (e) {
-
+                        
                     }
                     if (isRecognized) {
                         clearer();
@@ -217,12 +221,12 @@
                     this.touchmove(coors);
                     this.isDrawing = false;
                 }
-
+                
                 touchend = setTimeout(() => {
                     recognizeN().then(() => {
                         clearer();
                     })
-
+                    
                 }, 300)
             }
         };
@@ -239,30 +243,30 @@
                     };
                     type = "touchstart";
                     break;
-                case "mousemove":
-                    event.touches = [];
-                    event.touches[0] = {
-                        pageX: event.pageX,
-                        pageY: event.pageY
-                    };
-                    type = "touchmove";
-                    break;
-                case "mouseup":
-                    event.touches = [];
-                    event.touches[0] = {
+                    case "mousemove":
+                        event.touches = [];
+                        event.touches[0] = {
+                            pageX: event.pageX,
+                            pageY: event.pageY
+                        };
+                        type = "touchmove";
+                        break;
+                        case "mouseup":
+                            event.touches = [];
+                            event.touches[0] = {
                         pageX: event.pageX,
                         pageY: event.pageY
                     };
                     type = "touchend";
                     break;
-            }
-
-            // touchend clear the touches[0], so we need to use changedTouches[0]
-            let coors;
-            if (event.type === "touchend") {
-                coors = {
-                    x: event.changedTouches[0].pageX,
-                    y: event.changedTouches[0].pageY
+                }
+                
+                // touchend clear the touches[0], so we need to use changedTouches[0]
+                let coors;
+                if (event.type === "touchend") {
+                    coors = {
+                        x: event.changedTouches[0].pageX,
+                        y: event.changedTouches[0].pageY
                 };
             }
             else {
@@ -279,7 +283,7 @@
 
         // detect touch capabilities
         const touchAvailable = ('createTouch' in document) || ('ontouchstart' in window);
-
+        
         // attach the touchstart, touchmove, touchend event listeners.
         if (touchAvailable) {
             canvas.addEventListener('touchstart', draw, false);
@@ -292,37 +296,37 @@
             canvas.addEventListener('mousemove', draw, false);
             canvas.addEventListener('mouseup', draw, false);
         }
-
+        
         window.addEventListener("resize", event => {
             event.preventDefault();
             canvasOffset = getOffsetSum(canvas);
         }, false);
-
+        
         // prevent elastic scrolling
         document.body.addEventListener('touchmove', event => {
             event.preventDefault();
         }, false); // end body.onTouchMove
-
+        
         // Clear canvas
         document.getElementById('sketchClearButton').addEventListener('click', event => {
             event.preventDefault();
             clearer();
         }, false)
-
+        
         // Number recognizer
         function recognizeN() {
             return new Promise((resolve, reject) => {
                 if (isRecognized) return;
                 let imgData = context.getImageData(0, 0, 280, 280);
-
+                
                 grayscaleImg = imageDataToGrayscale(imgData);
                 const boundingRectangle = getBoundingRectangle(grayscaleImg, 0.01);
                 const trans = centerImage(grayscaleImg); // [dX, dY] to center of mass
-
+                
                 //console.log(grayscaleImg);
                 //console.log(boundingRectangle);
                 //console.log(trans);
-
+                
                 // copy image to hidden canvas, translate to center-of-mass, then
                 // scale to fit into a 200x200 box (see MNIST calibration notes on
                 // Yann LeCun's website)
@@ -339,14 +343,14 @@
                 copyCtx.translate(-canvas.width / 2, -canvas.height / 2);
                 // translate to center of mass
                 copyCtx.translate(trans.transX, trans.transY);
-
+                
                 copyCtx.drawImage(context.canvas, 0, 0);
-
+                
                 // now bin image into 10x10 blocks (giving a 28x28 image)
                 imgData = copyCtx.getImageData(0, 0, 280, 280);
                 grayscaleImg = imageDataToGrayscale(imgData);
                 // console.log(grayscaleImg);
-
+                
                 const nnInput = new Array(784);
                 const nnInput2 = [];
                 for (var y = 0; y < 28; y++) {
@@ -361,9 +365,9 @@
                         nnInput[x * 28 + y] = (mean - .5) / .5;
                     }
                 }
-
-
-
+                
+                
+                
                 // for visualization/debugging: paint the input to the neural net.
                 //if (document.getElementById('preprocessing').checked == true) {
                 if (true) {
@@ -384,32 +388,32 @@
                         }
                     }
                 }
-
-
+                
+                
                 //console.log(nnInput2);
                 // const output = nn(nnInput2);
                 // console.log(nnInput2);
-
-
+                
+                
                 // #############################################################################################
                 // #############################################################################################
-
+                
                 // const output =5
                 // document.getElementById('result').innerText = output.toString();
-
+                
                 // isRecognized = true;
                 // resolve()
                 net(nnInput2)
+                clearer();
             })
-
+            
         }
         // document.getElementById('sketchRecogniseButton').addEventListener('click', recognizeN, false)
     }, false); // end window.onLoad
 
     /* Controller */
     /* Imported model because < 1mb */
-  
-
+    
     function net(input) {
         console.log(input);
         
@@ -426,6 +430,7 @@
             method: 'POST',
             body: data,
             headers: {
+                
                 'Accept': 'application/json, text/plain',
                 'Content-Type': 'application/json',
                 // "X-CSRFToken": csrftoken
@@ -436,6 +441,7 @@
                 // console.log(pred_val);
                 // return pred_val
                 // console.log(pred_val);
+                
                 
                 pred_value = JSON.parse(pred_val)
                 // console.log(pred_value);
@@ -452,8 +458,8 @@
                     clear_btn = document.getElementsByClassName('clr_btn')
                     console.log(clear_btn[0]);
                     
-                    clr_btn_dom = `<button type="button" class="btn clr btn-primary mx-auto" id="sketchClearButton" onclick="window.location.reload()">clear</button>`
-                    
+                    clr_btn_dom = `<button type="button" class="btn clr btn-primary mx-auto" id="sketchClearButton" onclick="gen_randomNumber();">clear</button>`
+
                     check = verify(pred_value[key])
                     console.log(check);
                     
@@ -601,10 +607,17 @@
     }
 
 
-    function randomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
+    function gen_randomNumber() {
+        let min = 0
+        let max = 9
+        let r_n = Math.floor(Math.random() * (max - min) + min)
+        document.querySelector('.number').innerHTML = r_n
+        document.getElementById('result').innerHTML = ''
+        document.getElementById('clear_btn').innerHTML = ''
+        console.log(document.getElementById('clear_btn').innerHTML);
+        
+        // console.log(document.getElementById('result').innerHTML);
     }
-    document.querySelector('.number').innerHTML = randomNumber(1,9)
 
     function verify(pred_val){
         let given_num = document.querySelector('.number').innerHTML
