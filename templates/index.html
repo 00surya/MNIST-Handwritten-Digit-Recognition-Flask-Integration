@@ -13,10 +13,10 @@
         .main {
             /* border: 2px solid red; */
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* align-items: center; */
-            height: 400px; 
+            /* flex-direction: column; */
+            /* justify-content: center; */
+            align-items: center;
+            /* height: 900px;  */
             /* border: 2px solid red; */
         }
 
@@ -29,6 +29,8 @@
         #sketchpad {
             touch-action: none;
             border: 5px solid #077;
+            margin-left: 50px;
+            /* margin: ; */
         }
 
         #thumbnail {
@@ -39,7 +41,9 @@
             /* font-size: 128pt; */
             /* float: right; */
             /* width: 270px; */
-            height: 20px;
+            height: 320px;
+            width: 320px;
+            margin-left: 50px;
             /* border: 5px solid #fff; */
             /* text-align: center; */
             /* line-height: 280px; */
@@ -47,51 +51,87 @@
             /* border: 5px solid #077; */
         }  
         .number{
+            font-size: 80px;
+            /* border: 2px solid red; */
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-top: -40px;
+        }
+
+        .sub-main {
+            /* border: 2px solid red; */
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 30px;
+        }
+        .shake{
+
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
 
         }
 
+        @keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+        
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
+        }
+
+        @media screen and (max-width:1200px){
+            #clear_btn{text-align: center;margin-top: 10px;}
+            #clear_btn{margin: 40px 0;}
+            /* .sub-main{border: 2px solid red;} */
+            #sketchpad{margin-left: 10px;}
+            #result{margin-left: 10px;}
+        }
+
+        .social-ico{
+            /* border: 2px solid red; */
+            display: flex;   
+            justify-content: center;
+            align-items: center;
+            /* justify-content: end; */
+            /* margin-left: 30px; */
+            margin-top: 30px;
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            margin: -50px 0;
+
+        }
+        .start{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .scl{
+            /* margin: 0 10px;
+             */
+             padding: 0 6px;
+        }
+        .scl img{
+            width: 30px;
+        }
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
 
     <!-- Navbar -->
 
@@ -99,43 +139,53 @@
 
     <!-- card -->
 
-    
-    <p style="font-family: cursive; text-align: center; font-size: 30px; margin-top: 30px;">
-            MNIST Handwritten Digit Recognition
-    </p>
+<br>
+        <div>
+            <p style="font-family: cursive; text-align: center; font-size: 30px; margin-top: 30px;">
+                MNIST Handwritten Digit Recognition
+            </p>
+        </div>
+
+
+
     <br />
 
     
     
     <div class="main">
         
+        
         <div class="container">
-            <div class="number" style="font-size: 50px; font-weight: bold;width: 280px;display: flex;justify-content: center;"></div>
+            <div class="number"></div>
             
-            <div class="row">
-                <div class="col">
-                    <canvas id="sketchpad" width="280" height="280">Sorry, your browser is not supported.</canvas>
+            <div class="sub-main">
+                <div class="row">
+                    <!-- <p style="border: 2px solid red;padding-left: 200px; font-size: 20px; font-weight: 300;">Draw here</p> -->
+                    <div class="col">
+                        <canvas id="sketchpad" width="310" height="310">Sorry, your browser is not supported.</canvas>
+                    </div>
+                    
+                    <div class="col">
+                        
+                        <div id="result">
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col clr_btn" id='clear_btn'>
+                        
+                        
+                    </div>
+                    <div class="w-100"></div> <!--static-->
+                    
+                    
+                    <!-- <div class="col">Column4</div> -->
                 </div>
                 
-                <div class="col">
-                    <div id="result">
-
-                    </div>
-                </div>
-
-                <div class="col clr_btn" id='clear_btn'>
-                    
-
-                </div>
-                <div class="w-100"></div> <!--static-->
-
-
-                <!-- <div class="col">Column4</div> -->
             </div>
-
-
-
-               
+                
+                
+                
                 <div>
                     
                 </div>
@@ -145,6 +195,19 @@
     </div>
     
 
+    
+    <div class="social-ico">
+        <div class="git scl">
+            <a href="https://github.com/00surya">
+                <img src="https://img.icons8.com/fluency/144/000000/github.png"/>
+            </a>
+        </div>
+        <div class="lnk_dn scl">
+            <a href="https://www.linkedin.com/in/surya-verma-79116b1bb/">
+                <img src="https://img.icons8.com/fluency/144/000000/linkedin-2.png"/>
+            </a>
+        </div>
+    </div>
 </body>
 
 
@@ -154,6 +217,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
 let touchend;
+let draw_check = false
 gen_randomNumber()
     window.addEventListener('load', () => {
         document.body.addEventListener('touchmove', function (event) {
@@ -197,6 +261,7 @@ gen_randomNumber()
         const drawer = {
             isDrawing: false,
             touchstart(coors) {
+                clear_result()
                 context.beginPath();
                 context.lineWidth = 20;
                 context.lineCap = "round";
@@ -233,15 +298,18 @@ gen_randomNumber()
         };
         // create a function to pass touch events and coordinates to drawer
         function draw(event) {
-            let type = null;
-            // map mouse events to touch events
-            switch (event.type) {
-                case "mousedown":
-                    event.touches = [];
-                    event.touches[0] = {
-                        pageX: event.pageX,
-                        pageY: event.pageY
-                    };
+            if(draw_check==false){
+                
+                
+                let type = null;
+                // map mouse events to touch events
+                switch (event.type) {
+                    case "mousedown":
+                        event.touches = [];
+                        event.touches[0] = {
+                            pageX: event.pageX,
+                            pageY: event.pageY
+                        };
                     type = "touchstart";
                     break;
                     case "mousemove":
@@ -255,37 +323,45 @@ gen_randomNumber()
                         case "mouseup":
                             event.touches = [];
                             event.touches[0] = {
-                        pageX: event.pageX,
-                        pageY: event.pageY
-                    };
-                    type = "touchend";
-                    break;
+                                pageX: event.pageX,
+                                pageY: event.pageY
+                            };
+                            type = "touchend";
+                            break;
+                        }
+                        
+                        // touchend clear the touches[0], so we need to use changedTouches[0]
+                        let coors;
+                        if (event.type === "touchend") {
+                            coors = {
+                                x: event.changedTouches[0].pageX,
+                                y: event.changedTouches[0].pageY
+                            };
+                        }
+                        else {
+                            // get the touch coordinates
+                            coors = {
+                                x: event.touches[0].pageX,
+                                y: event.touches[0].pageY
+                            };
+                        }
+                        type = type || event.type
+                        // pass the coordinates to the appropriate handler
+                        drawer[type](coors);
+                    }
+                    else{
+                        document.querySelector("#sketchClearButton").className ='btn clr btn-primary mx-auto shake'
+                        setTimeout(() => {
+                            
+                            document.querySelector("#sketchClearButton").className ='btn clr btn-primary mx-auto'
+                        }, 2000);
+                    }
                 }
                 
-                // touchend clear the touches[0], so we need to use changedTouches[0]
-                let coors;
-                if (event.type === "touchend") {
-                    coors = {
-                        x: event.changedTouches[0].pageX,
-                        y: event.changedTouches[0].pageY
-                };
-            }
-            else {
-                // get the touch coordinates
-                coors = {
-                    x: event.touches[0].pageX,
-                    y: event.touches[0].pageY
-                };
-            }
-            type = type || event.type
-            // pass the coordinates to the appropriate handler
-            drawer[type](coors);
-        }
-
-        // detect touch capabilities
-        const touchAvailable = ('createTouch' in document) || ('ontouchstart' in window);
-        
-        // attach the touchstart, touchmove, touchend event listeners.
+                // detect touch capabilities
+                const touchAvailable = ('createTouch' in document) || ('ontouchstart' in window);
+                
+                // attach the touchstart, touchmove, touchend event listeners.
         if (touchAvailable) {
             canvas.addEventListener('touchstart', draw, false);
             canvas.addEventListener('touchmove', draw, false);
@@ -443,15 +519,13 @@ gen_randomNumber()
                 // return pred_val
                 // console.log(pred_val);
                 
-                console.log(pred_val)
+                
                 pred_value = JSON.parse(pred_val)
-                console.log(pred_value);
+                // console.log(pred_value);
                 result_box =  document.querySelector('#result')
                 
                 let res_map_obj = {
-                    'cnn_res':'CNN',
-                    'l_r_res':'Logestic Regression',
-                    'mnb_res':'Multi_N Naive Bayes'}
+                    'l_r_res':'Logestic Regression'}
 
                 for (const key in pred_value) {
                     doc = document.createElement("div")
@@ -466,21 +540,25 @@ gen_randomNumber()
                     
                     if(check){
                         class_name = 'alert-success'
+                        result = "Correct"
                     }
                     else{
                         class_name = 'alert-danger'
+                        result = "Opps! it's Wrong."
                     }
+
 
                     new_doc = document.createElement("div")
                     new_doc.className = `alert ${class_name}`
+                    new_doc.setAttribute("style", "height:100%");
                     // document.setAttribute("role", "alert");
                     // new_doc
 
                     
                     
-                    new_doc.innerHTML = `${res_map_obj[key]}-${pred_value[key]}`
+                    new_doc.innerHTML = `<h3 style="text-align:center">Model Predection</h3></br>  <h1 style="text-align:center; font-size:200px; height:100%;">${pred_value[key]}</h1> `
                     clear_btn[0].innerHTML = clr_btn_dom
-
+                    draw_check = true
                     result_box.appendChild(new_doc)
                     // new_doc=`<div class="alert ${class_name}" role="alert">${key}-${pred_value[key]}</div>`
 
@@ -607,15 +685,20 @@ gen_randomNumber()
         return grayscaleImg;
     }
 
+    function clear_result(){
 
+        draw_check = false
+        document.getElementById('result').innerHTML = ''
+        document.getElementById('clear_btn').innerHTML = ''
+        console.log(document.getElementById('clear_btn').innerHTML);
+
+    }
     function gen_randomNumber() {
         let min = 0
         let max = 9
         let r_n = Math.floor(Math.random() * (max - min) + min)
         document.querySelector('.number').innerHTML = r_n
-        document.getElementById('result').innerHTML = ''
-        document.getElementById('clear_btn').innerHTML = ''
-        console.log(document.getElementById('clear_btn').innerHTML);
+        clear_result()
         
         // console.log(document.getElementById('result').innerHTML);
     }
