@@ -12,11 +12,11 @@ class api:
         
         return pred
     
-    def mnb(self,arr):
-        mnb_ = joblib.load('mnb_digit_rec.pkl')
-        pred = mnb_.predict([arr])
+#     def mnb(self,arr):
+#         mnb_ = joblib.load('mnb_digit_rec.pkl')
+#         pred = mnb_.predict([arr])
 
-        return pred[0]
+#         return pred[0]
 
 # def l_r(arr):
 
