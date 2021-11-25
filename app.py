@@ -43,9 +43,9 @@ def digit():
         arr = request.json['array']
         arr = np.array(arr)
         lr_pred = api().l_r(arr)
-        mnb_pred = api().mnb(arr)
+#         mnb_pred = api().mnb(arr)
         
-        return jsonify(l_r_res=str(lr_pred[0]),mnb_res=str(mnb_pred))
+        return jsonify(l_r_res=str(lr_pred[0]))
 
     return render_template("index.html")
 
