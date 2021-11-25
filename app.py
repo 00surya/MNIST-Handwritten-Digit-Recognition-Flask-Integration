@@ -4,20 +4,20 @@ import numpy as np
 import joblib   
 
 
-# class api:
+class api:
     
-#     def l_r(self,arr):
-#         L_R = joblib.load('lr_digit_rec.pkl')
-#         pred = L_R.predict([arr])
+    def l_r(self,arr):
+        L_R = joblib.load('lr_digit_rec.pkl')
+        pred = L_R.predict([arr])
         
-#         return pred
+        return pred
     
-def l_r(arr):
+# def l_r(arr):
 
-    L_R = joblib.load('lr_digit_rec.pkl')
-    pred = L_R.predict([arr])
+#     L_R = joblib.load('lr_digit_rec.pkl')
+#     pred = L_R.predict([arr])
         
-    return pred
+#     return pred
 
 
 
@@ -35,7 +35,7 @@ def digit():
     if request.method == 'POST':
         arr = request.json['array']
         arr = np.array(arr)
-        lr_pred = l_r(arr)
+        lr_pred = api().l_r(arr)
         return jsonify(l_r_res=str(lr_pred[0]))
 
     return render_template("index.html")
