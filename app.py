@@ -12,10 +12,17 @@ import pickle
 class api:
     
     def l_r(self,arr):
-
         L_R = joblib.load('./services/lr_digit_rec.pkl')
         pred = L_R.predict([arr])
+        
         return pred
+    
+    def CNN(self,arr):
+        arr = arr.reshape(1,28,28,1)
+        c_pred = CNN_.predict([arr])
+        c_pred = np.argmax(c_pred)
+   
+        return c_pred
 
 
 app = Flask(__name__)
@@ -33,13 +40,13 @@ def digit():
         arr = request.json['array']
         arr = np.array(arr)
 
-#         cnn_pred = str(api.CNN(arr))
+        cnn_pred = api().CNN(arr))
         # knn_pred = api.KNN(arr)
         lr_pred = api().l_r(arr)
 #         mnb_pred = str(api.mnb(arr))
         # print(str(lr_pred))
 #         return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred,cnn_res=cnn_pred)
-        return jsonify(l_r_res=str(lr_pred[0]))
+        return jsonify(l_r_res=str(lr_pred[0]),cnn_res=str(cnn_pred))
         # return(str(cnn_pred))
     return render_template("index.html")
 
