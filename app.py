@@ -22,16 +22,16 @@ class api:
         
         return pred
     
-    def CNN(self,arr):
-        arr = arr.reshape(1,28,28,1)
-        c_pred = CNN_.predict([arr])
-        c_pred = np.argmax(c_pred)
+    # def CNN(self,arr):
+    #     arr = arr.reshape(1,28,28,1)
+    #     c_pred = CNN_.predict([arr])
+    #     c_pred = np.argmax(c_pred)
    
-        return c_pred
+    #     return c_pred
 
-    def MNB(self,arr):
-        pred = MNB_.predict([arr])
-        return pred[0]
+    # def MNB(self,arr):
+    #     pred = MNB_.predict([arr])
+    #     return pred[0]
 
 
 app = Flask(__name__)
