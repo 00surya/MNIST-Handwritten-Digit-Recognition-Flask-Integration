@@ -11,7 +11,7 @@ from keras.models import load_model
 
 
 L_R = joblib.load('./services/lr_digit_rec.pkl')
-CNN_ = load_model('./services/CNN_digit_rec.h5')
+# CNN_ = load_model('./services/CNN_digit_rec.h5')
 MNB_ = joblib.load('./services/mnb_digit_rec.pkl')
 
 class api:
@@ -48,13 +48,13 @@ def digit():
         arr = request.json['array']
         arr = np.array(arr)
 
-        cnn_pred = api().CNN(arr)
+#         cnn_pred = api().CNN(arr)
         # knn_pred = api.KNN(arr)
         lr_pred = api().l_r(arr)
         mnb_pred = api().MNB(arr)
         # print(str(lr_pred))
 #         return jsonify(mnb_res=mnb_pred,l_r_res=lr_pred,cnn_res=cnn_pred)
-        return jsonify(l_r_res=str(lr_pred[0]),cnn_res=str(cnn_pred),mnb_res=str(mnb_pred) )
+        return jsonify(l_r_res=str(lr_pred[0]),mnb_res=str(mnb_pred) )
         # return(str(cnn_pred))
     return render_template("index.html")
 
